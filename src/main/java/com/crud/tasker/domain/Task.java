@@ -16,12 +16,12 @@ import javax.persistence.Id;
 public class Task {
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String title;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String content;
 }

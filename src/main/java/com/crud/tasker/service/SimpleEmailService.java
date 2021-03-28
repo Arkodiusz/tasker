@@ -17,7 +17,6 @@ public class SimpleEmailService {
 
     public void send(final Mail mail) {
         log.info("Starting email preparation...");
-
         try {
             SimpleMailMessage mailMessage = createMailMessage(mail);
             javaMailSender.send(mailMessage);
@@ -32,6 +31,9 @@ public class SimpleEmailService {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
+        if (mail.getToCc() != null) {
+            mailMessage.setCc(mail.getToCc());
+        }
         return mailMessage;
     }
 }

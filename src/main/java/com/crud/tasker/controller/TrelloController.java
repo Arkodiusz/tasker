@@ -3,8 +3,7 @@ package com.crud.tasker.controller;
 import com.crud.tasker.domain.CreatedTrelloCardDto;
 import com.crud.tasker.domain.TrelloBoardDto;
 import com.crud.tasker.domain.TrelloCardDto;
-import com.crud.tasker.service.TrelloService;
-import com.crud.tasker.trello.client.TrelloClient;
+import com.crud.tasker.trello.facade.TrelloFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +15,15 @@ import java.util.List;
 @CrossOrigin("*")
 public class TrelloController {
 
-    private final TrelloClient trelloClient;
-    private final TrelloService trelloService;
+    private final TrelloFacade trelloFacade;
 
     @GetMapping("getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards() {
-        return trelloService.fetchTrelloBoards();
+        return trelloFacade.fetchTrelloBoards();
     }
 
     @PostMapping("createTrelloCard")
     public CreatedTrelloCardDto createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
-        return trelloService.createTrelloCard(trelloCardDto);
+        return trelloFacade.createCard(trelloCardDto);
     }
 }

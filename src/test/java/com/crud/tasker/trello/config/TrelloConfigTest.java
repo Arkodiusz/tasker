@@ -1,6 +1,6 @@
 package com.crud.tasker.trello.config;
 
-import com.crud.tasker.domain.CreatedTrelloCard;
+import com.crud.tasker.domain.CreatedTrelloCardDto;
 import com.crud.tasker.domain.TrelloBoardDto;
 import com.crud.tasker.domain.TrelloCardDto;
 import com.crud.tasker.domain.card.AttachmentByType;
@@ -34,7 +34,7 @@ class TrelloConfigTest {
     private TrelloConfig trelloConfig;
 
     @Test
-    public void shouldFetchTrelloBoards() throws URISyntaxException {
+    void shouldFetchTrelloBoards() throws URISyntaxException {
         //Given
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
@@ -58,7 +58,7 @@ class TrelloConfigTest {
     }
 
     @Test
-    public void shouldCreateCard() throws URISyntaxException {
+    void shouldCreateCard() throws URISyntaxException {
         // Given
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
@@ -72,17 +72,17 @@ class TrelloConfigTest {
 
         URI uri = new URI("http://test.com/cards?key=test&token=test&idList=test_id&name=Test%20task&desc=Test%20Description&pos=top");
 
-        CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "1",
                 "Test task",
                 "http://test.com",
                 new Badges(0, new AttachmentByType())
         );
 
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCardDto.class)).thenReturn(createdTrelloCardDto);
 
         // When
-        CreatedTrelloCard newCard = trelloClient.createNewCard(trelloCardDto);
+        CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
 
         //Then
         assertEquals("1", newCard.getId());
@@ -91,7 +91,7 @@ class TrelloConfigTest {
     }
 
     @Test
-    public void shouldReturnEmptyList() throws URISyntaxException {
+    void shouldReturnEmptyList() throws URISyntaxException {
         //Given
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");

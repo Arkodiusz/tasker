@@ -1,6 +1,6 @@
 package com.crud.tasker.trello.client;
 
-import com.crud.tasker.domain.CreatedTrelloCard;
+import com.crud.tasker.domain.CreatedTrelloCardDto;
 import com.crud.tasker.domain.TrelloBoardDto;
 import com.crud.tasker.domain.TrelloCardDto;
 import com.crud.tasker.trello.config.TrelloConfig;
@@ -43,10 +43,10 @@ public class TrelloClient {
         }
     }
 
-    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
+    public CreatedTrelloCardDto createNewCard(TrelloCardDto trelloCardDto) {
         URI url = buildUriCreateNewCard(trelloCardDto);
 
-        return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
+        return restTemplate.postForObject(url, null, CreatedTrelloCardDto.class);
     }
 
     private URI buildUriGetTrelloBoardsUri() {
@@ -58,7 +58,7 @@ public class TrelloClient {
                 .build()
                 .encode()
                 .toUri();
-        LOGGER.info("REQUEST: " + url.toString());
+        LOGGER.info("REQUEST: {}", url);
         return url;
     }
 
@@ -73,7 +73,7 @@ public class TrelloClient {
                 .build()
                 .encode()
                 .toUri();
-        LOGGER.info("REQUEST: " + url.toString());
+        LOGGER.info("REQUEST: {}", url);
         return url;
     }
 }

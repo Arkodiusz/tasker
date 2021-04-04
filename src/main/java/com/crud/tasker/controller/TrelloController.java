@@ -1,6 +1,6 @@
 package com.crud.tasker.controller;
 
-import com.crud.tasker.domain.CreatedTrelloCard;
+import com.crud.tasker.domain.CreatedTrelloCardDto;
 import com.crud.tasker.domain.TrelloBoardDto;
 import com.crud.tasker.domain.TrelloCardDto;
 import com.crud.tasker.service.TrelloService;
@@ -25,7 +25,7 @@ public class TrelloController {
     }
 
     @PostMapping("createTrelloCard")
-    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
+    public CreatedTrelloCardDto createTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
         return trelloService.createTrelloCard(trelloCardDto);
     }
 }

@@ -24,7 +24,7 @@ dependencies {
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-    implementation('mysql:mysql-connector-java')
+//    implementation('mysql:mysql-connector-java')
     runtimeOnly('com.h2database:h2')
 	runtimeOnly 'org.postgresql:postgresql'
 

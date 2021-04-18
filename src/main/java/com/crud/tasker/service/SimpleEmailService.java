@@ -1,17 +1,15 @@
 package com.crud.tasker.service;
 
 import com.crud.tasker.domain.Mail;
+import com.crud.tasker.scheduler.EmailScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-
-import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
@@ -38,7 +36,12 @@ public class SimpleEmailService {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
-            messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+
+            if (mail.getSubject().equals(EmailScheduler.SUBJECT)) {
+                messageHelper.setText(mailCreatorService.buildDailyEmail(mail.getMessage()), true);
+            } else {
+                messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+            }
         };
     }
 }

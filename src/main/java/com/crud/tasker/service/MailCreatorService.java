@@ -1,6 +1,9 @@
 package com.crud.tasker.service;
 
 import com.crud.tasker.config.AdminConfig;
+import com.crud.tasker.domain.Mail;
+import com.crud.tasker.domain.Task;
+import com.crud.tasker.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,10 @@ public class MailCreatorService {
 
     @Autowired
     private AdminConfig adminConfig;
+    @Autowired
+    private SimpleEmailService simpleEmailService;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @Autowired
     @Qualifier("templateEngine")
@@ -41,5 +48,24 @@ public class MailCreatorService {
         context.setVariable("application_functionality", functionality);
 
         return templateEngine.process("mail/created-trello-card-mail", context);
+    }
+
+    public String buildDailyEmail(String message) {
+
+        List<String> taskList = new ArrayList<>();
+
+        for (Task task : taskRepository.findAll()) {
+            taskList.add(task.getTitle());
+        }
+
+        Context context = new Context();
+
+        context.setVariable("preview_msg", "NOTIFICATION");
+        context.setVariable("message", message); context.setVariable("goodbye_msg", "Get the work done!");
+        context.setVariable("adminConfig", adminConfig);
+        context.setVariable("tasker_url", "http://Arkodiusz.github.io");
+        context.setVariable("task_list", taskList);
+
+        return templateEngine.process("mail/daily-notification-mail", context);
     }
 }

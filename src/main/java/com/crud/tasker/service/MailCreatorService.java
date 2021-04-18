@@ -23,6 +23,9 @@ public class MailCreatorService {
         context.setVariable("TASKER_URL", "http://Arkodiusz.github.io");
         context.setVariable("ADMIN_NAME", adminConfig.getAdminName());
         context.setVariable("BUTTON_NAME", "Visit website");
+        context.setVariable("PREVIEW_MESSAGE", "NOTIFICATION");
+        context.setVariable("GOODBYE_MESSAGE", "Bye bye!");
+        context.setVariable("COMPANY_DETAILS", adminConfig.getCompanyName());
 
         return templateEngine.process("mail/created-trello-card-mail", context);
     }

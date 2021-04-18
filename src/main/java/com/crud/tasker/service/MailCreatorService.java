@@ -65,13 +65,9 @@ public class MailCreatorService {
         context.setVariable("PREVIEW_MESSAGE", "NOTIFICATION");
         context.setVariable("GOODBYE_MESSAGE", "Bye bye!");
 
-        context.setVariable("show_button", false);
-        context.setVariable("is_friend", true);
-
         context.setVariable("message", message);
         context.setVariable("adminConfig", adminConfig);
         context.setVariable("tasker_url", "http://Arkodiusz.github.io");
-        context.setVariable("tasks_count", size);
         context.setVariable("task_list", taskList);
 
         return templateEngine.process("mail/daily-notification-mail", context);

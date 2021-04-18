@@ -1,7 +1,6 @@
 package com.crud.tasker.service;
 
 import com.crud.tasker.config.AdminConfig;
-import com.crud.tasker.domain.Mail;
 import com.crud.tasker.domain.Task;
 import com.crud.tasker.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ public class MailCreatorService {
 
     @Autowired
     private AdminConfig adminConfig;
-    @Autowired
-    private SimpleEmailService simpleEmailService;
     @Autowired
     private TaskRepository taskRepository;
 

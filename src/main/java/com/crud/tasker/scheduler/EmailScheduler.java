@@ -8,18 +8,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import static java.util.Optional.ofNullable;
+
 @Component
 @RequiredArgsConstructor
 public class EmailScheduler {
 
-    private static final String SUBJECT = "Tasks: Once a day email";
+    public static final String SUBJECT = "DAILY NOTIFICATION";
 
     private final SimpleEmailService simpleEmailService;
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;
 
-    //@Scheduled(fixedDelay = 60000)
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 30000)
+    //@Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
         String endOfMessage = size != 1 ? "tasks" : "task";

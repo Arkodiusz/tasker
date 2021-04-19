@@ -18,7 +18,7 @@ import static java.util.Optional.ofNullable;
 public class TrelloService {
     private static final String SUBJECT = "Tasks: New Trello card";
     private final TrelloClient trelloClient;
-    private final SimpleEmailService emailService;
+    private final SimpleEmailService simpleEmailService;
     private final AdminConfig adminConfig;
 
     public List<TrelloBoardDto> fetchTrelloBoards() {
@@ -27,7 +27,7 @@ public class TrelloService {
 
     public CreatedTrelloCardDto createTrelloCard(final TrelloCardDto trelloCardDto) {
         CreatedTrelloCardDto newCard = trelloClient.createNewCard(trelloCardDto);
-        ofNullable(newCard).ifPresent(card -> emailService.send(
+        ofNullable(newCard).ifPresent(card -> simpleEmailService.send(
                 new Mail(
                         adminConfig.getAdminMail(),
                         SUBJECT,

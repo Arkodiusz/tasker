@@ -61,6 +61,7 @@ public class MailCreatorService {
         context.setVariable("preview_msg", "DAILY!");
         context.setVariable("message", message);
         context.setVariable("goodbye_msg", "Get the wok done!");
+        context.setVariable("btn_name", "VISIT PAGE!");
 
 
         context.setVariable("adminConfig", adminConfig);

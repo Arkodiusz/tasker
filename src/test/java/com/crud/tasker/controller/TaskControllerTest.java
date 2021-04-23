@@ -52,7 +52,7 @@ class TaskControllerTest {
     }
 
     @Test
-    void shouldReturnTask() throws Exception {
+    void shouldReturnTask() throws Exception, TaskNotFoundException {
         // Given
         TaskDto taskDto = new TaskDto(1L, "title", "content");
         when(taskController.getTask(1L)).thenReturn(taskDto);

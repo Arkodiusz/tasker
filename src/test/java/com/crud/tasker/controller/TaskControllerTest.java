@@ -1,11 +1,13 @@
 package com.crud.tasker.controller;
 
 import com.crud.tasker.domain.*;
+import com.crud.tasker.service.DbService;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -18,24 +20,25 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
-@WebMvcTest(TaskControllerTest.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class TaskControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private TaskController taskController;
+    private DbService taskService;
 
     @Test
     void shouldFetchAllTasks() throws Exception {
         //Given
-        TaskDto taskDto1 = new TaskDto(1L, "title1", "content1");
-        TaskDto taskDto2 = new TaskDto(2L, "title2", "content2");
-        TaskDto taskDto3 = new TaskDto(3L, "title3", "content3");
-        List<TaskDto> taskDtoList = List.of(taskDto1, taskDto2, taskDto3);
+        Task task1 = new Task(1L, "title1", "content1");
+        Task task2 = new Task(2L, "title2", "content2");
+        Task task3 = new Task(3L, "title3", "content3");
+        List<Task> taskList = List.of(task1, task2, task3);
 
-        when(taskController.getTasks()).thenReturn(taskDtoList);
+        when(taskService.getAllTasks()).thenReturn(taskList);
 
         //When & Then
         mockMvc
@@ -52,10 +55,10 @@ class TaskControllerTest {
     }
 
     @Test
-    void shouldReturnTask() throws Exception, TaskNotFoundException {
+    void shouldReturnTask() throws Exception {
         // Given
-        TaskDto taskDto = new TaskDto(1L, "title", "content");
-        when(taskController.getTask(1L)).thenReturn(taskDto);
+        Task task = new Task(1L, "title", "content");
+        when(taskService.getTask(1L)).thenReturn(java.util.Optional.of(task));
 
         //When & Then
         mockMvc
@@ -80,12 +83,12 @@ class TaskControllerTest {
     @Test
     void shouldReturnTaskWhenUpdatingTask() throws Exception {
         // Given
-        TaskDto taskDto = new TaskDto(1L, "title", "content");
+        Task task = new Task(1L, "title", "content");
 
-        when(taskController.updateTask(any(TaskDto.class))).thenReturn(taskDto);
+        when(taskService.saveTask(any(Task.class))).thenReturn(task);
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(taskDto);
+        String jsonContent = gson.toJson(task);
 
         //When & Then
         mockMvc

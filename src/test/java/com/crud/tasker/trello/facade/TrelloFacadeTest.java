@@ -1,6 +1,7 @@
 package com.crud.tasker.trello.facade;
 
 import com.crud.tasker.domain.*;
+import com.crud.tasker.domain.card.Badges;
 import com.crud.tasker.mapper.TrelloMapper;
 import com.crud.tasker.service.TrelloService;
 import com.crud.tasker.trello.validator.TrelloValidator;
@@ -101,5 +102,18 @@ class TrelloFacadeTest {
                 assertThat(trelloListDto.isClosed()).isFalse();
             });
         });
+    }
+
+    @Test
+    void shouldCreateTrelloCard() {
+        //Given
+        TrelloCard card = new TrelloCard("name", "desc", "pos", "list");
+        CreatedTrelloCardDto createdCardDto = new CreatedTrelloCardDto("id", "name", "url", new Badges());
+
+        //When
+        when(trelloService.createTrelloCard(trelloMapper.mapToCardDto(card))).thenReturn(createdCardDto);
+
+        //Then
+        assertEquals(createdCardDto, trelloFacade.createCard(trelloMapper.mapToCardDto(card)));
     }
 }
